@@ -3,6 +3,20 @@
     "supabase": {
       "type": "http",
       "url": "https://mcp.supabase.com/mcp?project_ref=grazjheuzhhvufmruhdd"
+    },
+    "happyrobot": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@happyrobot-ai/mcp"
+      ]
+    },
+    "shadcn": {
+      "command": "npx",
+      "args": [
+        "shadcn@latest",
+        "mcp"
+      ]
     }
   }
 }
