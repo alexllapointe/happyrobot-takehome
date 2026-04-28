@@ -2,28 +2,17 @@
 
 Inbound carrier-call automation. The HappyRobot voice agent verifies the carrier with FMCSA, looks up the load by reference number, negotiates a rate up to 3 rounds, and POSTs the full call back to us via webhook. Everything lands in Postgres and surfaces live on a dashboard.
 
-- **Dashboard**: `https://<vercel-domain>`
-- **API**: `https://<railway-domain>` — health check at `/health`
+- **Dashboard**: `https://happyrobot-takehome.vercel.app`
+- **API**: `https://happyrobot-takehome-production-54e7.up.railway.app` — health check at `/health`
 - **Demo video**: `https://<video-url>`
 
 ---
 
 ## Architecture
 
-```
-Carrier ──voice──▶ HappyRobot agent ─────▶ Express API (Railway, Docker)
-                        │ tools                  ├ route → service → repository
-                        │   verify_carrier       ├ X-API-Key auth (timingSafeEqual)
-                        │   find_available_loads ├ Zod on every body + query
-                        │   evaluate_offer       └ Supabase (Postgres)
-                        │                              ▲
-                        │ end-of-call webhook          │
-                        ▼                              │
-                  POST /webhooks/happyrobot ───────────┘
-                                                       
-                  Browser ─▶ Next.js route handler ─▶ Express API
-                  (no Supabase client in browser; realtime channel for invalidation only)
-```
+![Architecture](docs/assets/architecture.png)
+
+The Carrier reaches the HappyRobot voice agent, which calls our API server (`verify_carrier`, `find_available_loads`, `evaluate_offer`) and POSTs to `/webhooks/happyrobot` at end-of-call. The dashboard (Next.js on Vercel) reads through the same API server — no direct DB access in the browser.
 
 ---
 
@@ -144,10 +133,10 @@ docker compose --env-file api/.env up --build
 **Health & auth**
 
 ```bash
-curl https://<railway-domain>/health
+curl https://happyrobot-takehome-production-54e7.up.railway.app/health
 
 curl -H "x-api-key: $API_KEY" \
-  "https://<railway-domain>/loads/search?reference_number=LD1001"
+  "https://happyrobot-takehome-production-54e7.up.railway.app/loads/search?reference_number=LD1001"
 ```
 
 **Negotiation walk-through** (carrier asking $2000 on $1850 load with $2035 ceiling):
@@ -157,7 +146,7 @@ SESSION="test_$(uuidgen)"
 for offer in 2000 1925; do
   curl -s -H "x-api-key: $API_KEY" -H "content-type: application/json" \
     -d "{\"session_id\":\"$SESSION\",\"offer\":$offer}" \
-    https://<railway-domain>/loads/LD1002/evaluate-offer | jq
+    https://happyrobot-takehome-production-54e7.up.railway.app/loads/LD1002/evaluate-offer | jq
 done
 # round 1 → counter $1925
 # round 2 → accept $1925 (offer matches our counter, falls into ≤ posted... actually
@@ -180,7 +169,7 @@ curl -X POST -H "content-type: application/json" \
     "duration":       42,
     "caller_number":  "+15555550100"
   }' \
-  https://<railway-domain>/webhooks/happyrobot
+  https://happyrobot-takehome-production-54e7.up.railway.app/webhooks/happyrobot
 ```
 
 The dashboard's Calls page picks it up within a second via Supabase realtime invalidation — no manual refresh.

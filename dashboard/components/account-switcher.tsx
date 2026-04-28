@@ -16,7 +16,7 @@ import { HappyRobotLogo } from '@/components/happy-robot-logo';
 // Picker placeholder. The take-home demo only has one account, but the
 // dropdown is wired up so that switching to a multi-tenant model later is a
 // matter of populating this list and routing on selection.
-const ACCOUNTS = [{ id: 'happy-robot', name: 'Happy Robot' }];
+const ACCOUNTS = [{ id: 'acme-logistics', name: 'Acme Logistics' }];
 
 export function AccountSwitcher() {
   const [active, setActive] = useState(ACCOUNTS[0]);

@@ -27,7 +27,10 @@ export function AppSidebar() {
   const pathname = usePathname();
   return (
     <Sidebar
-      collapsible="none"
+      // `offcanvas` keeps the sidebar visible on desktop and turns it into
+      // a slide-in Sheet on mobile (controlled by the SidebarTrigger in
+      // PageHeader).
+      collapsible="offcanvas"
       className="h-screen border-r border-sidebar-border bg-sidebar"
     >
       <SidebarHeader>

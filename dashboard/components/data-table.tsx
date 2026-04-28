@@ -14,7 +14,7 @@ import {
   useReactTable,
   type FilterFn,
 } from '@tanstack/react-table';
-import { CaretDown, Funnel, Trash, X } from '@phosphor-icons/react';
+import { CaretDown, CaretLeft, CaretRight, Funnel, Trash, X } from '@phosphor-icons/react';
 import { Button } from '@/components/ui/button';
 import { DataTableFilterDialog } from '@/components/data-table-filter-dialog';
 import {
@@ -280,21 +280,21 @@ export function DataTable<TData, TValue>({
         <div className="flex items-center gap-2">
           <Button
             variant="outline"
-            size="sm"
-            className="rounded-lg"
+            size="icon"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            Previous
+            <CaretLeft className="size-4" weight="bold" />
+            <span className="sr-only">Previous page</span>
           </Button>
           <Button
             variant="outline"
-            size="sm"
-            className="rounded-lg"
+            size="icon"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            Next
+            <CaretRight className="size-4" weight="bold" />
+            <span className="sr-only">Next page</span>
           </Button>
         </div>
       </div>

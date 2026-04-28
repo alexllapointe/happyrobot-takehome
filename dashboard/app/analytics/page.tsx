@@ -18,7 +18,7 @@ export default function AnalyticsPage() {
     <>
       <PageHeader title="Analytics" />
 
-      <main className="flex flex-1 flex-col gap-6 overflow-y-auto px-6 pb-6">
+      <main className="scrollbar-clean flex flex-1 flex-col gap-6 overflow-y-auto px-4 pb-6 md:px-6">
         <section className="grid grid-cols-2 gap-4 md:grid-cols-4">
           <KpiCard
             title="Booking rate"
@@ -45,7 +45,7 @@ export default function AnalyticsPage() {
             <CardTitle>By outcome</CardTitle>
             <CardDescription>Distribution of how calls ended.</CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="overflow-x-auto">
             <OutcomeBreakdownTable calls={calls} />
           </CardContent>
         </Card>
@@ -57,7 +57,7 @@ export default function AnalyticsPage() {
               Where the agent converts best. Pulled from the load attached to each call.
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="overflow-x-auto">
             <EquipmentBreakdownTable calls={calls} />
           </CardContent>
         </Card>
@@ -67,7 +67,7 @@ export default function AnalyticsPage() {
             <CardTitle>Top lanes</CardTitle>
             <CardDescription>By call volume — top 10.</CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="overflow-x-auto">
             <LaneBreakdownTable calls={calls} />
           </CardContent>
         </Card>

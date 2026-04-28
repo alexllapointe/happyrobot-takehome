@@ -14,8 +14,8 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'Carrier Sales Dashboard',
-  description: 'HappyRobot inbound carrier-call performance',
+  title: 'Acme Logistics — Carrier Sales',
+  description: 'Inbound carrier-call performance',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
