@@ -4,7 +4,7 @@ Inbound carrier-call automation. The HappyRobot voice agent verifies the carrier
 
 - **Dashboard**: `https://happyrobot-takehome.vercel.app`
 - **API**: `https://happyrobot-takehome-production-54e7.up.railway.app` — health check at `/health`
-- **Demo video**: `https://<video-url>`
+- **Demo video**: `(https://www.loom.com/share/ea1208bda52749b9826e2f37d303d29d)`
 
 ---
 
